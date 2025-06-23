@@ -1,0 +1,26 @@
+services:
+  claude-yolo:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: claude-yolo
+    env_file:
+      - .env
+    environment:
+      - GIT_BRANCH_PREFIX=${GIT_BRANCH_PREFIX}
+      - GIT_AUTHOR_NAME=${GIT_AUTHOR_NAME}
+      - GIT_AUTHOR_EMAIL=${GIT_AUTHOR_EMAIL}
+    volumes:
+      - ~/Projects/oss:/workspace/projects:ro
+      - ~/Projects/oss/claude-workspaces:/workspace/claude
+      - ./CLAUDE_YOLO.md:/workspace/CLAUDE.md
+      - ${PWD}/credentials.json:/home/claude/.claude/.credentials.json
+      - ~/.claude/projects:/home/claude/.claude/projects
+      - ~/.claude/settings.json:/home/claude/.claude/settings.json
+      - ~/.claude/statsig:/home/claude/.claude/statsig
+      - ~/.claude/todos:/home/claude/.claude/todos
+      - ~/.claude.json:/home/claude/.claude.json
+    working_dir: /workspace
+    stdin_open: true
+    tty: true
+    user: claude
