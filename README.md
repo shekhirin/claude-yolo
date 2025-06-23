@@ -34,8 +34,10 @@ docker compose run --rm claude-yolo -c
 ## Alias
 
 ```bash
-alias yolo='docker compose -f $PUBLIC_PROJECTS_PATH/claude-workspaces/claude-yolo/docker-compose.yml run --rm claude-yolo'
+alias yolo='docker compose -f CLAUDE_YOLO/docker-compose.yml run --rm claude-yolo'
 ```
+
+Replace `CLAUDE_YOLO` with the actual path to this repository.
 
 ## Mounts
 
