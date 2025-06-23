@@ -10,11 +10,6 @@ Docker container for Claude Code with autonomous permissions in isolated environ
    # Edit .env with your git config, branch prefix, and public projects path
    ```
 
-2. Create credentials file:
-   ```bash
-   cp ~/.claude/.credentials.json credentials.json
-   ```
-
 ## Quick Start
 
 ```bash
