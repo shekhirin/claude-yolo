@@ -7,7 +7,7 @@ Docker container for Claude Code with autonomous permissions in isolated environ
 1. **Required**: Copy `.env.example` to `.env` and configure:
    ```bash
    cp .env.example .env
-   # Edit .env with your git config, branch prefix, and OSS projects path
+   # Edit .env with your git config, branch prefix, and public projects path
    ```
 
 2. Create credentials file:
@@ -21,7 +21,7 @@ Docker container for Claude Code with autonomous permissions in isolated environ
 docker compose run --rm claude-yolo
 ```
 
-Runs Claude with bypassed permissions, mounts OSS projects (read-only) and workspaces (read-write).
+Runs Claude with bypassed permissions, mounts public projects (read-only) and workspaces (read-write).
 
 ## Commands
 
@@ -39,10 +39,10 @@ docker compose run --rm claude-yolo -c
 ## Alias
 
 ```bash
-alias yolo='docker compose -f $OSS_PROJECTS_PATH/claude-workspaces/claude-yolo/docker-compose.yml run --rm claude-yolo'
+alias yolo='docker compose -f $PUBLIC_PROJECTS_PATH/claude-workspaces/claude-yolo/docker-compose.yml run --rm claude-yolo'
 ```
 
 ## Mounts
 
-- `$OSS_PROJECTS_PATH` → `/workspace/projects` (read-only)
-- `$OSS_PROJECTS_PATH/claude-workspaces` → `/workspace/claude` (read-write)
+- `$PUBLIC_PROJECTS_PATH` → `/workspace/projects` (read-only)
+- `$PUBLIC_PROJECTS_PATH/claude-workspaces` → `/workspace/claude` (read-write)

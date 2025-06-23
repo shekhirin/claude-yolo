@@ -10,10 +10,10 @@ services:
       - GIT_BRANCH_PREFIX=${GIT_BRANCH_PREFIX}
       - GIT_AUTHOR_NAME=${GIT_AUTHOR_NAME}
       - GIT_AUTHOR_EMAIL=${GIT_AUTHOR_EMAIL}
-      - OSS_PROJECTS_PATH=${OSS_PROJECTS_PATH}
+      - PUBLIC_PROJECTS_PATH=${PUBLIC_PROJECTS_PATH}
     volumes:
-      - ${OSS_PROJECTS_PATH}:/workspace/projects:ro
-      - ${OSS_PROJECTS_PATH}/claude-workspaces:/workspace/claude
+      - ${PUBLIC_PROJECTS_PATH}:/workspace/projects:ro
+      - ${PUBLIC_PROJECTS_PATH}/claude-workspaces:/workspace/claude
       - ./CLAUDE_YOLO.md:/workspace/CLAUDE.md
       - ${PWD}/credentials.json:/home/claude/.claude/.credentials.json
       - ~/.claude/projects:/home/claude/.claude/projects
