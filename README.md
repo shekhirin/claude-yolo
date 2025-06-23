@@ -38,10 +38,12 @@ Add this function to your `.zshrc` or `.bashrc`:
 ```bash
 yolo () {
         (
-                cd ~/Projects/oss/claude-yolo && docker compose run --rm claude-yolo "$@"
+                cd CLAUDE_YOLO && docker compose run --rm claude-yolo "$@"
         )
 }
 ```
+
+Replace `CLAUDE_YOLO` with the actual path to this repository.
 
 This function:
 - Changes to the claude-yolo directory in a subshell
