@@ -1,37 +1,33 @@
-FROM alpine:latest
+FROM ubuntu:24.04
 
 WORKDIR /workspace
 
 # Install system dependencies
-RUN apk update && apk add --no-cache \
+RUN apt-get update && apt-get install -y \
   git \
   curl \
   wget \
   vim \
   nano \
-  openssh \
+  openssh-client \
   sudo \
   bash \
   bash-completion \
-  build-base \
-  pkgconf \
-  pkgconfig \
-  openssl-dev \
-  libc6-compat \
-  libgcc \
-  libstdc++ \
+  build-essential \
+  pkg-config \
+  libssl-dev \
   ca-certificates \
   nodejs \
   npm \
   coreutils \
   ripgrep \
-  fd \
-  clang-dev \
-  llvm-dev \
-  && rm -rf /var/cache/apk/*
+  fd-find \
+  clang \
+  llvm \
+  && rm -rf /var/lib/apt/lists/*
 
 # Create claude user
-RUN adduser -D -s /bin/bash claude && \
+RUN useradd -m -s /bin/bash claude && \
   echo 'claude ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
 
 # Create workspace directories
