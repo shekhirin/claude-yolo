@@ -15,6 +15,7 @@ RUN apk update && apk add --no-cache \
   bash-completion \
   build-base \
   pkgconf \
+  pkgconfig \
   openssl-dev \
   libc6-compat \
   libgcc \
@@ -25,6 +26,8 @@ RUN apk update && apk add --no-cache \
   coreutils \
   ripgrep \
   fd \
+  clang-dev \
+  llvm-dev \
   && rm -rf /var/cache/apk/*
 
 # Create claude user
@@ -47,6 +50,11 @@ RUN mkdir -p /home/claude/.npm-global && \
 
 # Install Claude Code as claude user
 RUN npm install -g @anthropic-ai/claude-code
+
+# Install foundryup and Foundry tools
+RUN curl -L https://foundry.paradigm.xyz | bash && \
+  source /home/claude/.bashrc && \
+  foundryup
 
 # Configure git for claude user (will be overridden by environment variables)
 RUN git config --global user.name "Claude Container" && \
