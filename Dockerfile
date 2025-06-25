@@ -68,6 +68,9 @@ RUN echo 'export TERM=xterm-256color' >> /home/claude/.bashrc && \
 # Create entrypoint script that sources environment
 RUN echo '#!/bin/bash' > /home/claude/entrypoint.sh && \
   echo 'source /home/claude/.bashrc' >> /home/claude/entrypoint.sh && \
+  echo '# Set environment variables for tools' >> /home/claude/entrypoint.sh && \
+  echo 'export PATH="/home/claude/.foundry/bin:/home/claude/.cargo/bin:/home/claude/.npm-global/bin:$PATH"' >> /home/claude/entrypoint.sh && \
+  echo 'source /home/claude/.cargo/env' >> /home/claude/entrypoint.sh && \
   echo '# Configure git with environment variables if provided' >> /home/claude/entrypoint.sh && \
   echo 'if [ -n "$GIT_AUTHOR_NAME" ]; then git config --global user.name "$GIT_AUTHOR_NAME"; fi' >> /home/claude/entrypoint.sh && \
   echo 'if [ -n "$GIT_AUTHOR_EMAIL" ]; then git config --global user.email "$GIT_AUTHOR_EMAIL"; fi' >> /home/claude/entrypoint.sh && \
