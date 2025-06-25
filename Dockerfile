@@ -34,10 +34,10 @@ RUN useradd -m -s /bin/bash claude && \
 RUN mkdir -p /workspace/projects /workspace/claude && \
   chown -R claude:claude /workspace
 
-# Install Rust for clade user
+# Install Rust for claude user
 USER claude
 RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y --default-toolchain stable && \
-  source /home/claude/.cargo/env && \
+  . /home/claude/.cargo/env && \
   rustup default stable
 
 # Configure npm to use user directory for global packages
@@ -49,7 +49,7 @@ RUN npm install -g @anthropic-ai/claude-code
 
 # Install foundryup and Foundry tools
 RUN curl -L https://foundry.paradigm.xyz | bash && \
-  source /home/claude/.bashrc && \
+  export PATH="/home/claude/.foundry/bin:$PATH" && \
   foundryup
 
 # Configure git for claude user (will be overridden by environment variables)
@@ -63,7 +63,7 @@ RUN echo 'export TERM=xterm-256color' >> /home/claude/.bashrc && \
   echo 'bind "set show-all-if-ambiguous on"' >> /home/claude/.bashrc && \
   echo 'bind "set completion-ignore-case on"' >> /home/claude/.bashrc && \
   echo 'source $HOME/.cargo/env' >> /home/claude/.bashrc && \
-  echo 'export PATH="/home/claude/.cargo/bin:/home/claude/.npm-global/bin:$PATH"' >> /home/claude/.bashrc
+  echo 'export PATH="/home/claude/.foundry/bin:/home/claude/.cargo/bin:/home/claude/.npm-global/bin:$PATH"' >> /home/claude/.bashrc
 
 # Create entrypoint script that sources environment
 RUN echo '#!/bin/bash' > /home/claude/entrypoint.sh && \
@@ -71,7 +71,7 @@ RUN echo '#!/bin/bash' > /home/claude/entrypoint.sh && \
   echo '# Configure git with environment variables if provided' >> /home/claude/entrypoint.sh && \
   echo 'if [ -n "$GIT_AUTHOR_NAME" ]; then git config --global user.name "$GIT_AUTHOR_NAME"; fi' >> /home/claude/entrypoint.sh && \
   echo 'if [ -n "$GIT_AUTHOR_EMAIL" ]; then git config --global user.email "$GIT_AUTHOR_EMAIL"; fi' >> /home/claude/entrypoint.sh && \
-  echo 'exec claude --dangerously-skip-permissions "$@"' >> /home/claude/entrypoint.sh && \
+  echo 'exec /home/claude/.npm-global/bin/claude --dangerously-skip-permissions "$@"' >> /home/claude/entrypoint.sh && \
   chmod +x /home/claude/entrypoint.sh
 
 # Prepare for linking the credentials file
