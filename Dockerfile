@@ -38,7 +38,8 @@ RUN mkdir -p /workspace/projects /workspace/claude && \
 USER claude
 RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y --default-toolchain stable && \
   . /home/claude/.cargo/env && \
-  rustup default stable
+  rustup default stable && \
+  rustup install nightly
 
 # Configure npm to use user directory for global packages
 RUN mkdir -p /home/claude/.npm-global && \
