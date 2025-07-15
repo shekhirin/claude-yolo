@@ -4,6 +4,7 @@ services:
       context: .
       dockerfile: Dockerfile
     container_name: claude-yolo
+    restart: unless-stopped
     env_file:
       - .env
     environment:
@@ -25,3 +26,4 @@ services:
     stdin_open: true
     tty: true
     user: claude
+    command: sleep infinity
