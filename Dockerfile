@@ -48,6 +48,10 @@ RUN mkdir -p /home/claude/.npm-global && \
 # Install Claude Code as claude user
 RUN npm install -g @anthropic-ai/claude-code
 
+# Install uv
+RUN curl -LsSf https://astral.sh/uv/install.sh | sh && \
+  export PATH="/home/claude/.local/bin:$PATH"
+
 # Install foundryup and Foundry tools
 RUN curl -L https://foundry.paradigm.xyz | bash && \
   export PATH="/home/claude/.foundry/bin:$PATH" && \
@@ -64,13 +68,13 @@ RUN echo 'export TERM=xterm-256color' >> /home/claude/.bashrc && \
   echo 'bind "set show-all-if-ambiguous on"' >> /home/claude/.bashrc && \
   echo 'bind "set completion-ignore-case on"' >> /home/claude/.bashrc && \
   echo 'source $HOME/.cargo/env' >> /home/claude/.bashrc && \
-  echo 'export PATH="/home/claude/.foundry/bin:/home/claude/.cargo/bin:/home/claude/.npm-global/bin:$PATH"' >> /home/claude/.bashrc
+  echo 'export PATH="/home/claude/.foundry/bin:/home/claude/.cargo/bin:/home/claude/.npm-global/bin:/home/claude/.local/bin:$PATH"' >> /home/claude/.bashrc
 
 # Create entrypoint script that sources environment
 RUN echo '#!/bin/bash' > /home/claude/entrypoint.sh && \
   echo 'source /home/claude/.bashrc' >> /home/claude/entrypoint.sh && \
   echo '# Set environment variables for tools' >> /home/claude/entrypoint.sh && \
-  echo 'export PATH="/home/claude/.foundry/bin:/home/claude/.cargo/bin:/home/claude/.npm-global/bin:$PATH"' >> /home/claude/entrypoint.sh && \
+  echo 'export PATH="/home/claude/.foundry/bin:/home/claude/.cargo/bin:/home/claude/.npm-global/bin:/home/claude/.local/bin:$PATH"' >> /home/claude/entrypoint.sh && \
   echo 'source /home/claude/.cargo/env' >> /home/claude/entrypoint.sh && \
   echo '# Configure git with environment variables if provided' >> /home/claude/entrypoint.sh && \
   echo 'if [ -n "$GIT_AUTHOR_NAME" ]; then git config --global user.name "$GIT_AUTHOR_NAME"; fi' >> /home/claude/entrypoint.sh && \
